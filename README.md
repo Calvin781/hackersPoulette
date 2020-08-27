@@ -3,8 +3,8 @@
 ## Project: Contact Form 
 
 ## Tech: 
-* PHP
-* PHPMailer
+* PHP (+PHPMailer)
+
 * Javascript 
 * Html
 * CSS.        
