@@ -19,4 +19,4 @@
 
 ---
 
-![Lighthouse](https://i.ibb.co/kx6DtK7/Mail.png) 
+![Lighthouse](https://i.ibb.co/kx6DtK7/Mail.png) Mail Setup
