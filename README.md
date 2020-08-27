@@ -7,7 +7,7 @@
 
 * Javascript 
 * Html
-* CSS.        
+* CSS 
 ---
 ![Mobile Version](https://i.ibb.co/x8pdz5s/hackerspoulette.png)
 
