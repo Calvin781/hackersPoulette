@@ -45,7 +45,7 @@ function sendMail()
 
         //Recipients
         $mail->setFrom('hackerspoulette@gmail.com', 'Hackers Poulette | Support');
-        $mail->addAddress('calvin.jitnaree123@gmail.com');     // Add a recipient
+        $mail->addAddress($email);     // Add a recipient
 
 
         // Content
