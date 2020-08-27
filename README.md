@@ -1,4 +1,4 @@
-# Hackers Poulette Project for Becode
+# Hackers Poulette | Project for Becode
 
 ## Project: Contact Form 
 
@@ -15,3 +15,8 @@
 ---
 
 ![Lighthouse](https://i.ibb.co/jZL4rhb/100.png) 
+
+
+---
+
+![Lighthouse](https://i.ibb.co/kx6DtK7/Mail.png) 
