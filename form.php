@@ -106,7 +106,7 @@ if (false === filter_var($email, FILTER_VALIDATE_EMAIL)) { // Check if the email
     $errors['email'] = "Email adress Invalid";
 }
 
-if (empty($message) && empty($fname) && empty($lname) && empty($email)) { //  Check if form is completed
+if (empty($message) or empty($fname) or empty($lname) or empty($email) or empty($country) or empty($subject)) { //  Check if form is completed
     $errors['incomplete'] = "Form is not completed";
 }
 
