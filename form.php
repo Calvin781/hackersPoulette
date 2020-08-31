@@ -2,13 +2,13 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 require 'PHPMailer-6.1.7/src/Exception.php';
 require 'PHPMailer-6.1.7/src/PHPMailer.php';
 require 'PHPMailer-6.1.7/src/SMTP.php';
 
 $fname = $lname = $email = $gender = $country = $subject = $comment = ""; // Defines all variables and put them empty
 $errors = array();
-$id = uniqid();
 
 function sendMail()
 {
@@ -63,7 +63,7 @@ function process()
     global $country;
     global $subject;
     global $comment;
-    require ('login.php');
+    require('login.php');
 
     $servername = "mysql-calvin-jitnaree.alwaysdata.net";
     $username = $mysqlUser;
@@ -82,7 +82,6 @@ function process()
         sendMail();
         echo "<meta http-equiv='refresh'
         content='0; url=https://calvin-jitnaree.alwaysdata.net/hackersP/submitted.php'>";
-
     } catch (PDOException $e) {
         echo $sql . "<br>" . $e->getMessage();
     }
@@ -100,8 +99,8 @@ function isFormValidate()
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['raison']) && !empty($_POST['raison'])) { // HoneySpot Trap
+if ((isset($_POST["submit"]))) {
+    if (isset($_POST['raison']) && !empty($_POST['raison'])) { // HONEY SPOT TRAP
         $errors['BotCatched'] = "Bot is trying to spam";
     }
     if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { // FOR EACH DATA WE CHECK IF THE INPUT IS VALID IF NOT WE DEFINE AN ERROR.
@@ -151,6 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         print_r($errors);
         exit; // Stop everything
     }
-    
+
+    $id = uniqid();
     process(); // Process after all check passed.
+
 }

@@ -66,16 +66,14 @@
             <br>
             <label for="comment">How can we help you ?</label>
             <textarea name="comment" id="comment" required minlength="30"></textarea>
-            <input type="submit" value="SUBMIT" id="submitbutton">
+            <input type="submit" value="SUBMIT" id="submitbutton" name="submit">
 
         </form>
 
         <?php
 
-
         ?>
     </div>
-
 
 </body>
 
