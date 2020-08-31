@@ -25,7 +25,9 @@ function sendMail()
 
     $mail = new PHPMailer(true);
     try {
+
         //Server settings
+
         $mail->SMTPDebug = 0;                      // Enable verbose debug output
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
@@ -36,24 +38,25 @@ function sendMail()
         $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
         //Recipients
+
         $mail->setFrom('hackerspoulette@gmail.com', 'Hackers Poulette | Support');
         $mail->addAddress($email);     // Add a recipient
 
 
         // Content
+
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = 'Thank you for contacting us';
         $mail->Body    = "<h3>Hello <strong>" . $fname . " " . $lname . ",</strong></h3> This email is to confirm you that our Team received your message. <br>We will reply within 24 yours. <br><br>----> your ticket ID is: <strong>[#" . $id . "]</strong> <br> Thank you for your patience, <br> <br> <strong>Hackers Poulette's Team.</strong>";
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
         $mail->send();
-        //echo 'Message has been sent';
+        
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
 
-function process()
+function addToDatabase()
 {
     global $id;
     global $fname;
@@ -63,6 +66,8 @@ function process()
     global $country;
     global $subject;
     global $comment;
+
+    $id = uniqid();
     require('login.php');
 
     $servername = "mysql-calvin-jitnaree.alwaysdata.net";
@@ -73,13 +78,11 @@ function process()
     try {
 
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO tickets (id, firstname, lastname, email, gender,country, subject, comment)
   VALUES ('" . $id . "','" . $fname . "', '" . $lname . "', '" . $email . "','" . $gender . "', '" . $country . "', '" . $subject . "', '" . $comment . "')";
-        // use exec() because no results are returned
         $conn->exec($sql);
-        sendMail();
+
         echo "<meta http-equiv='refresh'
         content='0; url=https://calvin-jitnaree.alwaysdata.net/hackersP/submitted.php'>";
     } catch (PDOException $e) {
@@ -151,7 +154,6 @@ if ((isset($_POST["submit"]))) {
         exit; // Stop everything
     }
 
-    $id = uniqid();
-    process(); // Process after all check passed.
-
+    addToDatabase(); // Add all the cleaned data to database
+    sendMail(); // Send the mail with cleaned data
 }
