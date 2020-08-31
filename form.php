@@ -2,19 +2,11 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require 'countries.php';
 require 'PHPMailer-6.1.7/src/Exception.php';
 require 'PHPMailer-6.1.7/src/PHPMailer.php';
 require 'PHPMailer-6.1.7/src/SMTP.php';
 
-$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-$fname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
-$lname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);
-$gender = filter_var($_POST['gender'], FILTER_SANITIZE_STRING);
-$country = filter_var($_POST['country'], FILTER_SANITIZE_STRING);
-$subject = filter_var($_POST['subject'], FILTER_SANITIZE_STRING);
-$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+$fname = $lname = $email = $gender = $country = $subject = $comment = ""; // Defines all variables and put them empty
 $errors = array();
 $id = uniqid();
 
@@ -98,22 +90,67 @@ function process()
     $conn = null;
 }
 
-
-if (isset($_POST['raison']) && !empty($_POST['raison'])) { // HoneySpot Trap
-    $errors['email'] = "Bot catched in hotneypot trap";
-}
-if (false === filter_var($email, FILTER_VALIDATE_EMAIL)) { // Check if the email is a valid one
-    $errors['email'] = "Email adress Invalid";
-}
-
-if (empty($comment) or empty($fname)  or empty($lname)  or empty($email)  or empty($country)  or empty($subject)) { //  Check if form is completed
-    $errors['incomplete'] = "Form is not completed";
+function isFormValidate()
+{
+    global $errors;
+    if (count($errors) === 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-if (count($errors) > 0) { // Check if all checkpoint passed
-    echo "There are mistakes!";
-    print_r($errors);
-    exit; // Stop everything
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['raison']) && !empty($_POST['raison'])) { // HoneySpot Trap
+        $errors['BotCatched'] = "Bot is trying to spam";
+    }
+    if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { // FOR EACH DATA WE CHECK IF THE INPUT IS VALID IF NOT WE DEFINE AN ERROR.
+        $errors['emailErr'] = "Email adress Invalid";
+    } else {
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);   // IF VALID WE REDEFINE THE VARIABLE SANITIZED.
+    }
 
-process(); // All fine, -> PROCESS
+    if (!preg_match("/^[A-zÀ-ÿ]+$/", $_POST['firstname']) or empty($_POST['firstname'])) {
+        $errors['firstNameErr'] = "Only letters and white space allowed for firstname and can't be empty";
+    } else {
+        $fname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
+    }
+    if (!preg_match("/^[A-zÀ-ÿ]+$/", $_POST['lastname']) or empty($_POST['firstname'])) {
+        $errors['lastNameErr'] = "Only letters and white space allowed for lastname and can't be empty";
+    } else {
+        $lname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);
+    }
+
+    if (empty($_POST['gender'])) {
+        $errors['genderErr'] = "Gender is required";
+    } else {
+        $gender = filter_var($_POST['gender'], FILTER_SANITIZE_STRING);
+    }
+
+    if (empty($_POST['country'])) {
+        $errors['countryErr'] = "Country is not selected";
+    } else {
+        $country = filter_var($_POST['country'], FILTER_SANITIZE_STRING);
+    }
+
+    if (empty($_POST['subject'])) {
+        $errors['subjectErr'] = "Subject in not selected";
+    } else {
+        $subject = filter_var($_POST['subject'], FILTER_SANITIZE_STRING);
+    }
+
+    if (strlen($_POST['comment']) < 30) {
+        $errors['commentErr'] = "Comment is too short minimum 30 characters";
+    } else {
+        $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+    }
+
+    if (!isFormValidate()) { //  Check if form is validate
+        echo "There are errors! Form is not well completed or not validated <br>";
+        echo "there are " . count($errors) . " errors <br>";
+        print_r($errors);
+        exit; // Stop everything
+    }
+    
+    process(); // Process after all check passed.
+}

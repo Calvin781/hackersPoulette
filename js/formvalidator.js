@@ -12,7 +12,6 @@ function testFname() {
 		document.getElementById("label-fname").style.color = "green";
 		fName.style.borderColor = "green";
 		fName.setCustomValidity("");
-		console.log(isValid(fName.value));
 	}
 
 	else {
@@ -38,7 +37,6 @@ function testLname() {
 		document.getElementById("label-lname").innerHTML = "Last name";
 		document.getElementById("label-lname").style.color = "green";
 		lName.setCustomValidity("");
-		console.log(isValid(lName.value));
 	}
 
 	else {
@@ -61,7 +59,6 @@ function testEmail() {
 
 	const regex = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
 
-	console.log(regex.test(email.value));
 	if (regex.test(email.value)) {
 		email.style.borderColor = "green";
 		document.getElementById("label-email").innerHTML = "Email";
@@ -74,7 +71,6 @@ function testEmail() {
 		document.getElementById("label-email").innerHTML = "Please enter a correct email. -> ex: skywalker@gmail.com";
 		document.getElementById("label-email").style.color = "red";
 		email.setCustomValidity("Please enter a correct email.");
-		console.log("Empty or incorrect email");
 		return false;
 	}
 }
