@@ -4,10 +4,11 @@
 
 ## Tech: 
 * PHP (+PHPMailer)
-
 * Javascript 
 * Html
 * CSS 
+
+### Form Validation on both side: Client & Server.
 ---
 ![Mobile Version](https://i.ibb.co/x8pdz5s/hackerspoulette.png)
 
