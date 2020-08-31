@@ -42,7 +42,6 @@ function sendMail()
         $mail->setFrom('hackerspoulette@gmail.com', 'Hackers Poulette | Support');
         $mail->addAddress($email);     // Add a recipient
 
-
         // Content
 
         $mail->isHTML(true);                                  // Set email format to HTML
@@ -50,7 +49,6 @@ function sendMail()
         $mail->Body    = "<h3>Hello <strong>" . $fname . " " . $lname . ",</strong></h3> This email is to confirm you that our Team received your message. <br>We will reply within 24 yours. <br><br>----> your ticket ID is: <strong>[#" . $id . "]</strong> <br> Thank you for your patience, <br> <br> <strong>Hackers Poulette's Team.</strong>";
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $mail->send();
-        
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
@@ -103,9 +101,11 @@ function isFormValidate()
 }
 
 if ((isset($_POST["submit"]))) {
+
     if (isset($_POST['raison']) && !empty($_POST['raison'])) { // HONEY SPOT TRAP
         $errors['BotCatched'] = "Bot is trying to spam";
     }
+    
     if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { // FOR EACH DATA WE CHECK IF THE INPUT IS VALID IF NOT WE DEFINE AN ERROR.
         $errors['emailErr'] = "Email adress Invalid";
     } else {
@@ -117,6 +117,7 @@ if ((isset($_POST["submit"]))) {
     } else {
         $fname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
     }
+
     if (!preg_match("/^[A-zÀ-ÿ]+$/", $_POST['lastname']) or empty($_POST['firstname'])) {
         $errors['lastNameErr'] = "Only letters and white space allowed for lastname and can't be empty";
     } else {
