@@ -10,14 +10,13 @@
     <meta name="Description" content="Author: A.N. Calvin,
     Illustrator: Calvin, Category: Form, Support,
   ">
-  <link rel="icon" type="image/png" href="img/logo_trans.png" />
+    <link rel="icon" type="image/png" href="img/logo_trans.png" />
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalyse.css">
 </head>
 
 <body>
-
 
     <img id="logo" src="img/logo_trans.png" alt="logo">
     <h3> Contact form</h3>
@@ -70,9 +69,6 @@
 
         </form>
 
-        <?php
-
-        ?>
     </div>
 
 </body>
